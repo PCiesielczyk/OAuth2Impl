@@ -20,14 +20,6 @@ spring:
             redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/{registrationId}"
             scope: openid
             client-name: resources-client-oidc
-          resources-client-authorization-code:
-            provider: spring
-            client-id: test-client
-            client-secret: secret
-            authorization-grant-type: authorization_code
-            redirect-uri: "http://127.0.0.1:8080/authorized"
-            scope: openid
-            client-name: resources-client-authorization-code
         provider:
           spring:
             issuer-uri: http://auth-server:9000
