@@ -1,0 +1,29 @@
+server:
+  port: 9000
+
+logging:
+  level:
+    org.springframework.security: trace
+
+spring:
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.web.servlet.error.ErrorMvcAutoConfiguration
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          resources-client-oidc:
+            registration:
+              client-id: "test-client"
+              client-secret: "{noop}secret"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - "http://127.0.0.1:8080/login/oauth2/code/resources-client-oidc"
+              post-logout-redirect-uris:
+                - "http://127.0.0.1:8080/"
+              scopes: openid, view:resources, create:resources
+            require-authorization-consent: true

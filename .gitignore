@@ -1,0 +1,13 @@
+./idea
+/AuthorizationServer/.mvn/
+/AuthorizationServer/target/
+/AuthorizationServer/AuthorizationServer.iml
+/AuthorizationServer/HELP.md
+/OAuth2Client/.mvn/
+/OAuth2Client/target/
+/OAuth2Client/HELP.md
+/OAuth2Client/OAuth2Client.iml
+/ResourceServer/.mvn/
+/ResourceServer/target/
+/ResourceServer/HELP.md
+/ResourceServer/ResourceServer.iml
