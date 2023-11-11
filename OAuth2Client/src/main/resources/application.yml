@@ -12,14 +12,22 @@ spring:
     oauth2:
       client:
         registration:
-          resources-client-oidc:
+          view-client:
             provider: spring
-            client-id: test-client
-            client-secret: secret
+            client-id: view-client
+            client-secret: view-secret
             authorization-grant-type: authorization_code
             redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/{registrationId}"
-            scope: openid
-            client-name: resources-client-oidc
+            scope: resources.read, openid
+            client-name: view-client
+          create-client:
+            provider: spring
+            client-id: create-client
+            client-secret: create-secret
+            authorization-grant-type: authorization_code
+            redirect-uri: "http://127.0.0.1:8080/login/oauth2/code/{registrationId}"
+            scope: resources.create, resources.read, openid
+            client-name: create-client
         provider:
           spring:
             issuer-uri: http://auth-server:9000

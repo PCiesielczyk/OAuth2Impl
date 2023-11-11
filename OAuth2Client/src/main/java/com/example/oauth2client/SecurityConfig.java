@@ -1,23 +1,29 @@
 package com.example.oauth2client;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+import org.springframework.security.web.server.csrf.CookieServerCsrfTokenRepository;
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-@EnableWebSecurity
+@EnableWebFluxSecurity
+@Configuration
 public class SecurityConfig {
 
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Order(1)
+    SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
         http
-                .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .anyRequest().authenticated())
-                .oauth2Login(oauth2Login ->
-                        oauth2Login.loginPage("/oauth2/authorization/resources-client-oidc"))
-                .oauth2Client(withDefaults());
+                .authorizeExchange(authorize -> authorize
+                        .anyExchange().authenticated())
+                .oauth2Login(withDefaults())
+                .oauth2Client((withDefaults()))
+                .csrf(ServerHttpSecurity.CsrfSpec::disable);
         return http.build();
     }
 }

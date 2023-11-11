@@ -12,18 +12,33 @@ spring:
     oauth2:
       authorizationserver:
         client:
-          resources-client-oidc:
+          view-client:
             registration:
-              client-id: "test-client"
-              client-secret: "{noop}secret"
+              client-id: "view-client"
+              client-secret: "{noop}view-secret"
               client-authentication-methods:
                 - "client_secret_basic"
               authorization-grant-types:
                 - "authorization_code"
                 - "refresh_token"
               redirect-uris:
-                - "http://127.0.0.1:8080/login/oauth2/code/resources-client-oidc"
+                - "http://127.0.0.1:8080/login/oauth2/code/view"
               post-logout-redirect-uris:
                 - "http://127.0.0.1:8080/"
-              scopes: openid, view:resources, create:resources
+              scopes: resources.read, openid
+            require-authorization-consent: true
+          create-client:
+            registration:
+              client-id: "create-client"
+              client-secret: "{noop}create-secret"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "authorization_code"
+                - "refresh_token"
+              redirect-uris:
+                - "http://127.0.0.1:8080/login/oauth2/code/create"
+              post-logout-redirect-uris:
+                - "http://127.0.0.1:8080/"
+              scopes: resources.read, resources.create, openid
             require-authorization-consent: true
