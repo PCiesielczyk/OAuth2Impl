@@ -88,26 +88,26 @@ public class AuthorizationServerConfig {
 
     @Bean
     public RegisteredClientRepository registeredClientRepository() {
-        RegisteredClient viewClient = RegisteredClient.withId(UUID.randomUUID().toString())
-                .clientId("view-client")
-                .clientSecret("{noop}view-secret")
+        RegisteredClient viewClientAuthCode = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId("view-client-auth-code")
+                .clientSecret("{noop}view-auth-code-secret")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri("http://127.0.0.1:8080/login/oauth2/code/view-client")
+                .redirectUri("http://127.0.0.1:8080/login/oauth2/code/view-client-auth-code")
                 .postLogoutRedirectUri("http://127.0.0.1:8080/authorized")
                 .scope(OidcScopes.OPENID)
                 .scope("resources.read")
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 .build();
 
-        RegisteredClient createClient = RegisteredClient.withId(UUID.randomUUID().toString())
-                .clientId("create-client")
-                .clientSecret("{noop}create-secret")
+        RegisteredClient createClientAuthCode = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId("create-client-auth-code")
+                .clientSecret("{noop}create-auth-code-secret")
                 .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
-                .redirectUri("http://127.0.0.1:8080/login/oauth2/code/create-client")
+                .redirectUri("http://127.0.0.1:8080/login/oauth2/code/create-client-auth-code")
                 .postLogoutRedirectUri("http://127.0.0.1:8080/authorized")
                 .scope(OidcScopes.OPENID)
                 .scope("resources.create")
@@ -115,7 +115,18 @@ public class AuthorizationServerConfig {
                 .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
                 .build();
 
-        return new InMemoryRegisteredClientRepository(viewClient, createClient);
+        RegisteredClient viewClientCredentials = RegisteredClient.withId(UUID.randomUUID().toString())
+                .clientId("view-client-credentials")
+                .clientSecret("{noop}view-credentials-secret")
+                .clientAuthenticationMethod(ClientAuthenticationMethod.CLIENT_SECRET_BASIC)
+                .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+                .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
+                .scope(OidcScopes.OPENID)
+                .scope("resources.read")
+                .clientSettings(ClientSettings.builder().requireAuthorizationConsent(true).build())
+                .build();
+
+        return new InMemoryRegisteredClientRepository(viewClientAuthCode, createClientAuthCode, viewClientCredentials);
     }
 
     @Bean

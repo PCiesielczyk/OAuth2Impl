@@ -12,10 +12,10 @@ spring:
     oauth2:
       authorizationserver:
         client:
-          view-client:
+          view-client-auth-code:
             registration:
-              client-id: "view-client"
-              client-secret: "{noop}view-secret"
+              client-id: "view-client-auth-code"
+              client-secret: "{noop}view-auth-code-secret"
               client-authentication-methods:
                 - "client_secret_basic"
               authorization-grant-types:
@@ -27,10 +27,10 @@ spring:
                 - "http://127.0.0.1:8080/"
               scopes: resources.read, openid
             require-authorization-consent: true
-          create-client:
+          create-client-auth-code:
             registration:
-              client-id: "create-client"
-              client-secret: "{noop}create-secret"
+              client-id: "create-client-auth-code"
+              client-secret: "{noop}create-auth-code-secret"
               client-authentication-methods:
                 - "client_secret_basic"
               authorization-grant-types:
@@ -41,4 +41,13 @@ spring:
               post-logout-redirect-uris:
                 - "http://127.0.0.1:8080/"
               scopes: resources.read, resources.create, openid
-            require-authorization-consent: true
+          view-client-credentials:
+            registration:
+              client-id: "view-client-credentials"
+              client-secret: "{noop}view-credentials-secret"
+              client-authentication-methods:
+                - "client_secret_basic"
+              authorization-grant-types:
+                - "client_credentials"
+                - "refresh_token"
+              scopes: resources.read, openid
